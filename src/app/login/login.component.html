@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div class="row align-items-center">
+        <div class="col-3 col-md-5  col-lg-3 bg-custom p-2 text-center d-none d-md-block align-self-center">
+            <div class="mt-5">
+                <img src="../../assets/filter_w.svg" alt="" width="250" class="login-img">
+                <div class="text-white mt-4 fs-6 fw-bold">Create & Manage your employee Details</div>
+            </div>
+        </div>
+        <div class="col-12 col-md-7 col-lg-9">
+            <div class="row align-items-center justify-content-center mt-5 mt-md-0">
+                <div class="col-8 col-lg-6 h-100">
+                    <div class="my-2 text-center">
+                        <img src="../../assets/EMS.svg" alt="">
+                    </div>
+                    <div class="my-2 text-center primary-text">
+                        Login
+                    </div>
+                    <div class="my-2">
+                        <label for="" class="form-label">Email Id</label>
+                        <input type="text" class="form-control" placeholder="Email ID" [(ngModel)]="Email" [ngModelOptions]="{standalone : true}">
+                    </div>
+                    <div class="my-2">
+                        <label for="" class="form-label">Password</label>
+                        <input type="password" class="form-control" placeholder="Password" [(ngModel)]="Password" [ngModelOptions]="{standalone : true}">
+                    </div>
+                    <div class="my-2">
+                        <div class="link-primary">forgot password?</div>
+                    </div>
+                    <div class="my-2">
+                        <button class="btn primary-btn w-100" (click)="login()" routerLinkActive="router-link-active" >Login</button>
+                    </div>
+                    <div class="my-2 text-center mt-2">New Organization? <span [routerLink]="['/organizationRegister']"  class="link-primary">Register Now</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

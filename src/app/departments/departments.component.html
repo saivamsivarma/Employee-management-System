@@ -1,0 +1,122 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../../assets/EMS.svg" alt="" width="50" height="24">
+          </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="router-link-active" >DashBoard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/departments']" routerLinkActive="router-link-active" >Departments</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/employees']" routerLinkActive="router-link-active" >Employees</a>
+          </li>
+        </ul>
+       <div> <button class="btn primary-btn" (click)="api.logout()">Logout</button></div>
+
+      </div>
+    </div>
+  </nav>
+<div class="container mt-3 h-custom">
+    <div class="row gy-2">
+        <div class="col-12" *ngIf="api.getDepartmentLoad">
+            <div class="row gy-0 h-custom align-items-center justify-content-center">
+                <div class="col-12 col-md-4 text-center">
+                    <img src="../../assets/loading.svg" alt="" height="350" class="img-fluid">
+                    <div class="fs-6"><span class="primary-text fs-bold">Fetching</span> your Department Record.</div>
+                    <div class="spinner-border text-primary mt-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="!api.getDepartmentLoad">
+            <div class="row h-custom align-items-center justify-content-center"
+                *ngIf="api.getDepartmentResult.length===0">
+                <div class="col-12 col-md-4 text-center">
+                    <img src="../../assets/standout.svg" alt="" height="350" class="img-fluid">
+                    <div class="fs-6 my-3">No Departments found in your <span
+                            class="primary-text fw-bold">Organization</span>.</div>
+                    <div class="fs-6">Add a <span class="primary-text fw-bold">Department</span> to your Organization
+                    </div>
+                    <button class="btn primary-btn my-3 shadow w-100" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"> Add a Department</button>
+                </div>
+            </div>
+            <div class="row gy-2" *ngIf="api.getDepartmentResult.length!=0">
+                <div class="col-12">
+                        <button class="btn primary-outline-btn float-end" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"> Add a Department</button>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4" *ngFor="let i of api.getDepartmentResult">
+                    <div class="card shadow-sm p-3">
+                        <div class="row align-items-center">
+                            <div class="col-6 px-3">
+                                <div class="row align-items-center">
+                                    <div class="col-4">
+                                        <img src="../../assets/male.svg" alt="" height="50">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class=" fs-4">{{i.fullTimeEmployeeNum+i.internEmployeeNum+i.contractEmployeeNum}}</div>
+                                        <div class="text-secondary">Employees</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="primary-text fs-4 float-end">{{i.dept_name}}</div>
+                            </div>
+                            <div class="col-4 text-center my-2">
+                                <div class="text-secondary">Full Time</div>
+                                <div>{{i.fullTimeEmployeeNum}}</div>
+                            </div>
+                            <div class="col-4 text-center my-2">
+                                <div class="text-secondary">Contract</div>
+                                <div>{{i.contractEmployeeNum}}</div>
+                            </div>
+                            <div class="col-4 text-center my-2">
+                                <div class="text-secondary">Internship</div>
+                                <div>{{i.internEmployeeNum}}</div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn primary-btn w-100" (click)="deptDetails(i._id)" >View Department</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Department</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="my-3">
+                    <label for="">Department Name</label>
+                    <input type="text" class="form-control" placeholder="Department Name" [(ngModel)]="dept_name"
+                        [ngModelOptions]="{standalone : true}">
+                </div>
+            </div>
+            <hr>
+            <div class="px-2 pb-2">
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn primary-btn w-25" data-bs-dismiss="modal"
+                        (click)="createDepartment()">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

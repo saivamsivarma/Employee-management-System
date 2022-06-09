@@ -1,1 +1,47 @@
+
 /* You can add global styles to this file, and also import other style files */
+
+*{
+    box-sizing: border-box ;
+}
+
+html,body{
+    max-width: 100%;
+    min-height: 30%;
+    overflow-x: hidden;
+}
+.primary-text{
+    color:#536DFE;
+}
+
+.custom-lg-font{
+    font-size: 10vh;
+}
+
+.primary-btn,.pirmary-btn:hover{
+    color:#ffffff !important;
+    background-color: #536DFE;
+}
+
+.primary-outline-btn{
+    background-color:#ffffff !important;
+    border:solid 2px #536DFE;
+    color: #536DFE;
+}
+
+.primary-outline-btn:hover{
+    color:#ffffff !important;
+    background-color: #536DFE !important;
+}
+
+.link-primary{
+ cursor:pointer;
+}
+
+.primary-bg{
+    background-color: #536DFE;
+}
+
+.active-btn{
+    border:2px solid #536DFE !important;
+}

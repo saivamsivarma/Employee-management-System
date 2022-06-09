@@ -1,0 +1,341 @@
+<div class="container">
+    <div class="row my-5 align-items-center justify-content-center">
+        <div class="col-12" *ngIf="api.getDepartmentDetailLoad">
+            <div class="row gy-0 h-custom align-items-center justify-content-center">
+                <div class="col-12 col-md-4 text-center">
+                    <img src="../../assets/loading.svg" alt="" height="350" class="img-fluid">
+                    <div class="fs-6"><span class="primary-text fs-bold">Fetching</span> your Department Record.</div>
+                    <div class="spinner-border text-primary mt-2" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12" *ngIf="!api.getDepartmentDetailLoad">
+            <div class="row h-custom align-items-center justify-content-center"
+                        *ngIf="api.getEmployeeResult.length===0">
+                        <div class="col-12 col-md-4 text-center">
+                            <img src="../../assets/standout.svg" alt="" height="350" class="img-fluid">
+                            <div class="fs-6 my-3">No Employee Records found in your <span
+                                    class="primary-text fw-bold">{{api.getDepartmentDetailResult.dept_name}}</span>.</div>
+                            <div class="fs-6">Add a <span class="primary-text fw-bold">Employee records</span> to your
+                                department.
+                            </div>
+                            <button class="btn primary-btn my-3 shadow w-100" (click)="createEmployeePopUp('create',api.getDepartmentDetailResult._id,api.getDepartmentDetailResult.dept_name)"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"> Add an Employee</button>
+                        </div>
+                    </div>
+
+            <div class="row gy-2 mt-2" *ngIf="api.getEmployeeResult.length!=0">
+                <div class="col-6">
+                    <button class="btn primary-btn" [routerLink]="['/departments']"
+                        routerLinkActive="router-link-active">Back to Departments</button>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex p-2  float-end">
+                        <button type="button" class="btn" (click)="stateChange('cards')"
+                            [ngClass]="layout==='cards' ? 'active-btn fw-bold' : btn "><img src="../../assets/roomy.svg"
+                                alt="" height="20"></button>
+                        <button type="button" class="btn" (click)="stateChange('table')"
+                            [ngClass]="layout==='table' ? 'active-btn fw-bold' : btn"><img src="../../assets/table.svg"
+                                alt="" height="20"></button>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="primary-text fs-3">{{api.getDepartmentDetailResult.dept_name}}</div>
+                </div>
+                <div class="col-8">
+                    <button class="btn primary-outline-btn float-end"
+                        (click)="createEmployeePopUp('create',api.getDepartmentDetailResult._id,api.getDepartmentDetailResult.dept_name)"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal"> Add a Employee</button>
+                </div>
+                <div class="col-12" *ngIf="layout==='cards'">
+                    <div class="row" *ngIf="api.getEmployeeResult!=0">
+                        <div class="col-12 col-md-6 col-lg-4" *ngFor="let i of api.getEmployeeResult">
+                            <div class="card shadow p-2">
+                                <div class="row align-items-center justify-content-center gy-1">
+                                    <div class="col-6">
+                                        <span class="badge primary-bg">{{i.dept_name}}</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-secondary float-end">DOJ:{{i.doj}}</div>
+                                    </div>
+                                    <div class="col-12 my-3 text-center">
+                                        <img src="../../assets/male.svg" alt="" height="100" *ngIf="i.gender==='Male'">
+                                        <img src="../../assets/female.svg" alt="" height="100"
+                                            *ngIf="i.gender==='Female'">
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div class="fw-bold">{{i.employee_name}}</div>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div class="text-secondary">{{i.employee_email}}</div>
+                                    </div>
+                                    <div class="col-9 text-center">
+                                        <span class="badge bg-light text-dark">Role:{{i.role}}</span>
+                                        <span class="badge primary-bg ml-2"> Exp:{{i.experience}}years</span>
+                                    </div>
+                                    <div class="col-9 text-center">
+
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <div class="primary-text fw-bold">Salary $:{{i.salary}}</div>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <button class="btn primary-btn w-75" (click)="deleteEmployee(i._id,'delete')"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</button>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <button class="btn primary-outline-btn w-75"
+                                            (click)="updateEmployeePopup(i,'update')" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12" *ngIf="layout==='table'">
+                    <table class="table table-hover" *ngIf="api.getEmployeeResult!=0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Department</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">JobType</th>
+                                <th scope="col">Experience</th>
+                                <th scope="col">Salary($)</th>
+                                <th scope="col">Data of Joining</th>
+                                <th scope="col">Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of api.getEmployeeResult">
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="../../assets/male.svg" alt="" height="40" *ngIf="i.gender==='Male'">
+                                        <img src="../../assets/female.svg" alt="" height="40"
+                                            *ngIf="i.gender==='Female'">
+                                        <div>
+                                            <div>{{i.employee_name}}</div>
+                                            <div class="text-secondary">{{i.employee_email}}</div>
+                                        </div>
+                                    </div>
+
+
+                                </td>
+                                <td> <span class="badge primary-bg">{{i.dept_name}}</span></td>
+                                <td>{{i.role}}</td>
+                                <td>{{i.jobType}}</td>
+                                <td>{{i.experience}}</td>
+                                <td>{{i.salary}}</td>
+                                <td>{{i.doj}}</td>
+                                <td>{{i.contact}}</td>
+                                <td>
+                                    <button class="btn shadow-sm rouneded-cricle"
+                                        (click)="updateEmployeePopup(i,'update')" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"><img src="../../assets/edit.svg" alt=""
+                                            height="25"></button>
+                                </td>
+                                <td>
+                                    <button class="btn shadow-sm rouneded-cricle"
+                                        (click)="deleteEmployee(i._id,'delete')" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"><img src="../../assets/delete.svg" alt=""
+                                            height="25"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" *ngIf="state==='delete'">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-header" *ngIf="state==='create'">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-header" *ngIf="state==='update'">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Employee details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body" *ngIf="state==='delete'">
+                    <div class="text-center">
+                        <img src="../../assets/warning.svg" alt="" height="200">
+                    </div>
+                    <div class="fs-6"> Are you sure you want to <span class="fw-bold text-danger">Remove</span> this
+                        employee Record from your Organization?</div>
+                </div>
+                <div class="modal-body" *ngIf="state==='create'">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <div class="text-center">
+                                <img src="../../assets/male.svg" alt="" height="100">
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mt-2">
+                                <label for="">Employee's Name</label>
+                                <input type="text" class="form-control" placeholder="Employee's Name" required
+                                    [(ngModel)]="Employee_name" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Employee's employee_email</label>
+                                <input type="email" class="form-control" placeholder="Employee's Email" required
+                                    [(ngModel)]="Employee_email" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Contact</label>
+                                <input type="tel" class="form-control" placeholder="Contact" required
+                                pattern="\d*" maxlength="10" [(ngModel)]="Contact"
+                                    [ngModelOptions]="{standalone : true}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mt-2">
+                                <label for="" class="form-label">Gender</label>
+                                <select class="form-select" aria-label="Default select" [(ngModel)]="Gender"
+                                    [ngModelOptions]="{standalone : true}">
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Employee's Role</label>
+                                <input type="text" class="form-control" placeholder="Role" required [(ngModel)]="Role"
+                                    [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Date of Join</label>
+                                <input type="date" class="form-control" required [(ngModel)]="Data_of_join"
+                                    [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Experience</label>
+                                <input type="number" class="form-control" placeholder="Experience" required step="0.5"
+                                    [(ngModel)]="Experience" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">JobType</label>
+                                <select class="form-select" aria-label="Default select" [(ngModel)]="JobType"
+                                    [ngModelOptions]="{standalone : true}">
+                                    <option value="" selected>Select type</option>
+                                    <option value="Fulltime">Fulltime</option>
+                                    <option value="Internship">Internship</option>
+                                    <option value="Contract">Contract</option>
+                                </select>
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Salary/hr</label>
+                                <input type="number" class="form-control" placeholder="Salary" required min="20"
+                                    max="100" [(ngModel)]="Salary" [ngModelOptions]="{standalone : true}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-body" *ngIf="state==='update'">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <div class="text-center">
+                                <img src="../../assets/male.svg" alt="" height="100">
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="mt-2">
+                                <label for="">Employee's Name</label>
+                                <input type="text" class="form-control" placeholder="Employee's Name"
+                                    [(ngModel)]="employeeDetails.employee_name" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Employee's Email</label>
+                                <input type="email" class="form-control" placeholder="Employee's Email" required
+                                    [(ngModel)]="employeeDetails.employee_email" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Contact</label>
+                                <input type="tel" class="form-control" placeholder="Contact" required
+                               maxlength="10" [(ngModel)]="employeeDetails.contact"
+                                    [ngModelOptions]="{standalone : true}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mt-2">
+                                <label for="" class="form-label">Gender</label>
+                                <select class="form-select" aria-label="Default select"
+                                    [(ngModel)]="employeeDetails.gender" [ngModelOptions]="{standalone : true}">
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Employee's Role</label>
+                                <input type="text" class="form-control" placeholder="Role" required
+                                    [(ngModel)]="employeeDetails.role" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Experience</label>
+                                <input type="number" class="form-control" placeholder="Experience" required step="0.5"
+                                    [(ngModel)]="employeeDetails.experience" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="mt-2">
+                                <label for="">JobType</label>
+                                <select class="form-select" aria-label="Default select"
+                                    [(ngModel)]="employeeDetails.jobType" [ngModelOptions]="{standalone : true}">
+                                    <option value="" selected>Select type</option>
+                                    <option value="Fulltime">Fulltime</option>
+                                    <option value="Contract">Contract</option>
+                                    <option value="Internship">Internship</option>
+                                </select>
+                            </div>
+                            <div class="mt-2">
+                                <label for="">Salary/hr</label>
+                                <input type="number" class="form-control" placeholder="Salary" required min="20"
+                                    max="100" [(ngModel)]="employeeDetails.salary"
+                                    [ngModelOptions]="{standalone : true}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+                <div class="px-2 pb-2" *ngIf="state==='update'">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn primary-btn w-25" data-bs-dismiss="modal"
+                            (click)="update()">Update</button>
+                    </div>
+                </div>
+                <div class="px-2 pb-2" *ngIf="state==='create'">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn primary-btn w-25" data-bs-dismiss="modal"
+                            (click)="create()">Create</button>
+                    </div>
+                </div>
+                <div class="px-2 pb-2" *ngIf="state==='delete'">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary w-25" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger w-25" data-bs-dismiss="modal"
+                            (click)="delete()">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

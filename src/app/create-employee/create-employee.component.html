@@ -1,0 +1,143 @@
+<div class="container-fluid">
+    <div class="row bg-custom align-items-center justify-content-center">
+        <div class="col-12 col-md-5 mt-3">
+            <div class="card shadow p-2">
+                <div class="d-flex justify-content-between">
+                    <div class="fs-2 fw-bold primary-text">Create Employee</div>
+                    <div>
+                        <button class="btn" [routerLink]="['/dashboard']" routerLinkActive="router-link-active" ><img src="../../assets/close.svg" alt="" height="20"></button>
+                    </div>
+                </div>
+                <div class="row gy-2 align-items-center" *ngIf="formState==='personal'">
+                    <div class="col-12">
+                        <div class="primary-text text-center">(Personal information)</div>
+                    </div>
+                    <div class="col-12 col-lg-3 text-center">
+                        <img src="../../assets/male.svg" alt="" height="110">
+                    </div>
+                    <div class="col-12 col-lg-9">
+                        <div class="row gy-1">
+                            <div class="col-6">
+                                <label for="" class="form-label">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="FirstName" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="col-6">
+                                <label for="" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="LastName" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="col-6">
+                                <label for="" class="form-label">Age</label>
+                                <input type="number" class="form-control" placeholder="Age" [(ngModel)]="Age" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="col-6">
+                                <label for="" class="form-label">Date of Birth</label>
+                                <input type="date" class="form-control" [(ngModel)]="BirthDate" [ngModelOptions]="{standalone : true}">
+                            </div>
+                            <div class="col-12">
+                                <label for="" class="form-label">Gender</label>
+                                <select class="form-select" aria-label="Default select" [(ngModel)]="Gender" [ngModelOptions]="{standalone : true}">
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button class="btn primary-btn w-100" (click)="stateChange('job')">Next</button>
+                    </div>
+                </div>
+
+                <div class="row gy-2 align-items-center" *ngIf="formState==='job'">
+                    <div class="col-12">
+                        <div class="primary-text text-center">(Employee's Job information)</div>
+                    </div>
+                    <div class="col-12">
+
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Degree</label>
+                            <input type="text" class="form-control" placeholder="Degree" [(ngModel)]="Education" [ngModelOptions]="{standalone : true}">
+                        </div>
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Department</label>
+                            <input type="text" class="form-control" placeholder="Department" [(ngModel)]="Department" [ngModelOptions]="{standalone : true}">
+                        </div>
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Role</label>
+                            <input type="text" class="form-control" placeholder="Role" [(ngModel)]="Post" [ngModelOptions]="{standalone : true}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn w-100" (click)="stateChange('personal')">Back</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn primary-btn w-100" (click)="stateChange('contact')">Next</button>
+                    </div>
+                </div>
+
+                <div class="row gy-2 align-items-center" *ngIf="formState==='contact'">
+                    <div class="col-12">
+                        <div class="primary-text text-center">(Employee's Contact information)</div>
+                    </div>
+                    <div class="col-12">
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Contact Number</label>
+                            <input type="number" class="form-control" placeholder="Phone number" [(ngModel)]="Contact" [ngModelOptions]="{standalone : true}">
+                        </div>
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Email</label>
+                            <input type="email" class="form-control" placeholder="Email" [(ngModel)]="Email" [ngModelOptions]="{standalone : true}">
+                        </div>
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Mailing Address</label>
+                            <textarea class="form-control" placeholder="Mailing Address" [(ngModel)]="Address" [ngModelOptions]="{standalone : true}"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn w-100" (click)="stateChange('job')">Back</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn primary-btn w-100" (click)="stateChange('salary')">Next</button>
+                    </div>
+                </div>
+
+                <div class="row gy-2 align-items-center" *ngIf="formState==='salary'">
+                    <div class="col-12">
+                        <div class="primary-text text-center">(Employee's Salary information)</div>
+                    </div>
+                    <div class="col-12">
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's SSN Number</label>
+                            <input type="number" class="form-control" placeholder="SSN number" [(ngModel)]="SSN" [ngModelOptions]="{standalone : true}">
+                        </div>
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Job type</label>
+                            <select class="form-select" aria-label="Default select example" [(ngModel)]="Job_type" [ngModelOptions]="{standalone : true}">
+                                <option selected>Select job Type</option>
+                                <option value="Full-time">Full-time</option>
+                                <option value="Contract">Contract</option>
+                                <option value="Internship">Internship</option>
+                              </select>
+                        </div>
+                        <div class="my-2">
+                            <label for="" class="form-label">Employee's Salary</label>
+                            <div class="d-flex justify-content-between w-50 align-items-center">
+                                <div class="primary-text fw-bold">$</div>
+                                <input type="number" class="form-control" placeholder="Salary" [(ngModel)]="Salary" [ngModelOptions]="{standalone : true}">
+                                <div class="">/hr</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn w-100" (click)="stateChange('contact')">Back</button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn primary-btn w-100" (click)="createEmployee()">Submit</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

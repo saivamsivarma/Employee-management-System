@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row bg-custom align-items-center justify-content-center">
+        <div class="col-12 col-md-5">
+            <div class="card shadow p-4">
+                <div class="text-center my-2 fs-1 fw-bold primary-text">Organization</div>
+                <div class="my-2">
+                    <label for="">Organization Name</label>
+                    <input type="text" class="form-control" placeholder="Organization Name" [(ngModel)]="Organization_name" [ngModelOptions]="{standalone : true}">
+                </div>
+                <div class="my-2">
+                    <label for="">Branch_code</label>
+                    <input type="text" class="form-control" placeholder="Branch code" [(ngModel)]="Branch_code" [ngModelOptions]="{standalone : true}">
+                </div>
+                <div class="my-2">
+                    <button (click)="createOrganization()"  class="btn primary-btn w-100">Create Organization</button>
+                </div>
+                <div class="my-2 text-center">
+                    <div class="fs-6">Already a Member? <span [routerLink]="['/login']" class="link-primary"> EMS Login</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
